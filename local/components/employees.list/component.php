@@ -54,6 +54,13 @@ if ($USER->IsAuthorized()) {
     $arResult['error'] = 'unauthorized';
 }
 
+/**
+ * Gets the category of the employee's position by his login
+ *
+ * @param string $userLogin
+ *
+ * @return int
+ */
 function getPositionCode($userLogin)
 {
     $hlblock = HL\HighloadBlockTable::getList(
@@ -76,6 +83,13 @@ function getPositionCode($userLogin)
     }
 }
 
+/**
+ * Gets a list of car comfort categories for an employee
+ *
+ * @param int $positionCode
+ *
+ * @return array
+ */
 function getComfortCategories($positionCode)
 {
     $hlblock = HL\HighloadBlockTable::getList(
@@ -104,6 +118,11 @@ function getComfortCategories($positionCode)
     }
 }
 
+/**
+ * Gets a class of cars
+ *
+ * @return string
+ */
 function getDataClassCars()
 {
     $carsHLBlockAll = HL\HighloadBlockTable::getList(
@@ -119,6 +138,11 @@ function getDataClassCars()
     }
 }
 
+/**
+ * Gets a class of car models
+ *
+ * @return string
+ */
 function getDataClassModels()
 {
     $modelsHLBlockAll = HL\HighloadBlockTable::getList(
@@ -134,6 +158,11 @@ function getDataClassModels()
     }
 }
 
+/**
+ * Gets a class of car comfort categories
+ *
+ * @return string
+ */
 function getDataClassCategories()
 {
     $categoriesHLBlockAll = HL\HighloadBlockTable::getList(
@@ -149,6 +178,11 @@ function getDataClassCategories()
     }
 }
 
+/**
+ * Gets a class of car orders
+ *
+ * @return string
+ */
 function getDataClassOrders()
 {
     $ordersHLBlockAll = HL\HighloadBlockTable::getList(
@@ -164,6 +198,16 @@ function getDataClassOrders()
     }
 }
 
+/**
+ * Gets a list of available cars for a specified period of time
+ * If null is passed as the second parameter,
+ * it gets a list of all cars potentially available for the current employee
+ *
+ * @param    array   $arComfortCategories
+ * @param array|null $arIdBookedCars
+ *
+ * @return array
+ */
 function getFreeCars($arComfortCategories, $arIdBookedCars)
 {
     $carsDataClass = getDataClassCars();
@@ -195,6 +239,15 @@ function getFreeCars($arComfortCategories, $arIdBookedCars)
     }
 }
 
+/**
+ * Gets a list of unique IDs of cars booked for a specified period of time
+ *
+ * @param array $arComfortCategories
+ * @param  int  $newStartTime
+ * @param  int  $newEndTime
+ *
+ * @return array
+ */
 function getIdBookedCars($arComfortCategories, $newStartTime, $newEndTime)
 {
     $ordersDataClass = getDataClassOrders();
@@ -240,6 +293,15 @@ function getIdBookedCars($arComfortCategories, $newStartTime, $newEndTime)
     }
 }
 
+/**
+ * Records a new car order to the database
+ *
+ * @param int $carId
+ * @param int $newStartTime
+ * @param int $newEndTime
+ *
+ * @return int
+ */
 function addOrder($carId, $newStartTime, $newEndTime)
 {
     $ordersDataClass = getDataClassOrders();
